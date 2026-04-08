@@ -1,25 +1,22 @@
 public class Bogie {
-    private String type;
-    private String cargo;
+    private final String type;
+    private final int capacity;
 
-    public Bogie(String type, String cargo) {
+    public Bogie(String type, int capacity) {
         this.type = type;
-        this.cargo = cargo;
+        this.capacity = capacity;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getCargo() {
-        return cargo;
+    public int getCapacity() {
+        return capacity;
     }
 
     @Override
     public String toString() {
-        return "Bogie{" +
-                "type='" + type + '\'' +
-                ", cargo='" + cargo + '\'' +
-                '}';
+        return type + " - " + capacity;
     }
 }
