@@ -11,21 +11,39 @@ public class Train_app {
 
         List<Bogie> bogies = new ArrayList<>();
 
-        bogies.add(new Bogie("Cylindrical", "Petroleum"));
-        bogies.add(new Bogie("Open", "Coal"));
-        bogies.add(new Bogie("Box", "Grain"));
-
-        // Safety validation
-        boolean isSafe = bogies.stream()
-                .allMatch(b ->
-                        !b.getType().equals("Cylindrical") ||
-                                b.getCargo().equals("Petroleum")
-                );
-
-        if (isSafe) {
-            System.out.println("Train is SAFE");
-        } else {
-            System.out.println("Train is UNSAFE");
+        // Create sample data (large dataset)
+        for (int i = 0; i < 10000; i++) {
+            bogies.add(new Bogie("Sleeper", 72));
+            bogies.add(new Bogie("AC Chair", 60));
+            bogies.add(new Bogie("First Class", 40));
         }
+
+        // 🔹 Loop-based filtering
+        long startLoop = System.nanoTime();
+
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.getCapacity() > 60) {
+                loopResult.add(b);
+            }
+        }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // 🔹 Stream-based filtering
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .toList();
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // Output
+        System.out.println("Loop Time: " + loopTime);
+        System.out.println("Stream Time: " + streamTime);
+        System.out.println("Results Match: " + (loopResult.size() == streamResult.size()));
     }
 }
