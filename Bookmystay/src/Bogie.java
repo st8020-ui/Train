@@ -14,4 +14,12 @@ public class Bogie {
     public int getCapacity() {
         return capacity;
     }
+
+    @Override
+    public String toString() {
+        return "Bogie{" +
+                "type='" + type + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
 }
