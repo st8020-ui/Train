@@ -8,15 +8,16 @@ import java.util.stream.Collectors;
 public class Train_app {
 
     public static void main(String[] args) {
-        try {
-            Bogie b1 = new Bogie("Sleeper", 72);   // valid
-            Bogie b2 = new Bogie("AC Chair", -10); // invalid
+        Bogie b1 = new Bogie("Cylindrical");
+        Bogie b2 = new Bogie("Rectangular");
 
-            System.out.println("Bogies created successfully");
+        // Safe assignment
+        b1.assignCargo("Petroleum");
 
-        } catch (InvalidCapacityException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+        // Unsafe assignment
+        b2.assignCargo("Petroleum");
 
+        // Program continues
+        System.out.println("Program continues...");
     }
 }

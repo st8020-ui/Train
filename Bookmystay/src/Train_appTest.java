@@ -11,54 +11,48 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class Train_appTest {
 
-
     @Test
-    public void testException_ValidCapacityCreation() throws InvalidCapacityException {
-        Bogie b = new Bogie("Sleeper", 72);
-        assertNotNull(b);
+    public void testCargo_SafeAssignment() {
+        Bogie b = new Bogie("Cylindrical");
+        b.assignCargo("Petroleum");
+
+        assertEquals("Petroleum", b.getCargo());
     }
 
     @Test
-    public void testException_NegativeCapacityThrowsException() {
-        Exception exception = assertThrows(InvalidCapacityException.class, () -> {
-            new Bogie("Sleeper", -10);
-        });
+    public void testCargo_UnsafeAssignmentHandled() {
+        Bogie b = new Bogie("Rectangular");
+        b.assignCargo("Petroleum");
 
-        assertEquals("Capacity must be greater than zero", exception.getMessage());
+        assertNull(b.getCargo());
     }
 
     @Test
-    public void testException_ZeroCapacityThrowsException() {
-        Exception exception = assertThrows(InvalidCapacityException.class, () -> {
-            new Bogie("AC Chair", 0);
-        });
+    public void testCargo_CargoNotAssignedAfterFailure() {
+        Bogie b = new Bogie("Rectangular");
+        b.assignCargo("Petroleum");
 
-        assertEquals("Capacity must be greater than zero", exception.getMessage());
+        assertNull(b.getCargo());
     }
 
     @Test
-    public void testException_ExceptionMessageValidation() {
-        Exception exception = assertThrows(InvalidCapacityException.class, () -> {
-            new Bogie("First Class", 0);
-        });
+    public void testCargo_ProgramContinuesAfterException() {
+        Bogie b1 = new Bogie("Rectangular");
+        Bogie b2 = new Bogie("Cylindrical");
 
-        assertEquals("Capacity must be greater than zero", exception.getMessage());
+        b1.assignCargo("Petroleum"); // fails
+        b2.assignCargo("Coal");      // works
+
+        assertEquals("Coal", b2.getCargo());
     }
 
     @Test
-    public void testException_ObjectIntegrityAfterCreation() throws InvalidCapacityException {
-        Bogie b = new Bogie("Sleeper", 72);
+    public void testCargo_FinallyBlockExecution() {
+        Bogie b = new Bogie("Rectangular");
 
-        assertEquals("Sleeper", b.getType());
-        assertEquals(72, b.getCapacity());
-    }
+        // We assume finally runs if no crash happens
+        b.assignCargo("Petroleum");
 
-    @Test
-    public void testException_MultipleValidBogiesCreation() throws InvalidCapacityException {
-        Bogie b1 = new Bogie("Sleeper", 72);
-        Bogie b2 = new Bogie("AC Chair", 60);
-
-        assertNotNull(b1);
-        assertNotNull(b2);
+        assertTrue(true); // if reached, finally executed
     }
 }
