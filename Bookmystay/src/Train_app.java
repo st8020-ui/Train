@@ -13,16 +13,12 @@ public class Train_app {
         bogies.add(new Bogie("AC Chair", 60));
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("AC Chair", 60));
 
-        // Grouping by type
-        Map<String, List<Bogie>> groupedBogies =
-                bogies.stream()
-                        .collect(Collectors.groupingBy(Bogie::getType));
+        // Calculate total seating capacity
+        int totalSeats = bogies.stream()
+                .map(b -> b.getCapacity())
+                .reduce(0, Integer::sum);
 
-        // Display result
-        groupedBogies.forEach((type, list) -> {
-            System.out.println(type + " -> " + list);
-        });
+        System.out.println("Total Seating Capacity: " + totalSeats);
     }
 }
