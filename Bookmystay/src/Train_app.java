@@ -9,36 +9,23 @@ public class Train_app {
 
     public static void main(String[] args) {
 
-        String trainId = "TRN-1234";
-        String cargoCode = "PET-AB";
+        List<Bogie> bogies = new ArrayList<>();
 
-        // Regex patterns
-        String trainRegex = "TRN-\\d{4}";
-        String cargoRegex = "PET-[A-Z]{2}";
+        bogies.add(new Bogie("Cylindrical", "Petroleum"));
+        bogies.add(new Bogie("Open", "Coal"));
+        bogies.add(new Bogie("Box", "Grain"));
 
-        // Compile patterns
-        Pattern trainPattern = Pattern.compile(trainRegex);
-        Pattern cargoPattern = Pattern.compile(cargoRegex);
+        // Safety validation
+        boolean isSafe = bogies.stream()
+                .allMatch(b ->
+                        !b.getType().equals("Cylindrical") ||
+                                b.getCargo().equals("Petroleum")
+                );
 
-        // Create matchers
-        Matcher trainMatcher = trainPattern.matcher(trainId);
-        java.util.regex.Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
-
-        // Validate
-        boolean isTrainValid = trainMatcher.matches();
-        boolean isCargoValid = cargoMatcher.matches();
-
-        // Output
-        if (isTrainValid) {
-            System.out.println("Valid Train ID");
+        if (isSafe) {
+            System.out.println("Train is SAFE");
         } else {
-            System.out.println("Invalid Train ID");
-        }
-
-        if (isCargoValid) {
-            System.out.println("Valid Cargo Code");
-        } else {
-            System.out.println("Invalid Cargo Code");
+            System.out.println("Train is UNSAFE");
         }
     }
 }
