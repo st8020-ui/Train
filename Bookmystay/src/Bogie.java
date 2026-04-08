@@ -1,14 +1,22 @@
 public class Bogie {
-    String name;
-    int capacity;
+    private String type;
+    private int capacity;
 
-    Bogie(String name, int capacity) {
-        this.name = name;
+    public Bogie(String type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     @Override
     public String toString() {
-        return name + " → Capacity: " + capacity;
+        return "Bogie{" + "type='" + type + '\'' + ", capacity=" + capacity + '}';
     }
 }
